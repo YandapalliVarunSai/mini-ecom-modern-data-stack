@@ -1,0 +1,14 @@
+version: 2
+sources:
+  - name: raw_lz
+    database: ANALYTICS_DEV
+    schema: RAW_LZ
+    tables:
+      - name: customers_raw
+        loaded_at_field: _ingested_at
+        freshness:
+          warn_after: {count: 2, period: day}
+          error_after: {count: 4, period: day}
+      - name: products_raw
+      - name: orders_raw
+      - name: order_items_raw
