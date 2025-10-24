@@ -22,7 +22,7 @@ The goal is to show how to build a **scalable, modular, and production-ready dat
 
 ## 🧠 Architecture Overview
 
-```text
+
 Excel → (Python) → CSV
          |
          v
