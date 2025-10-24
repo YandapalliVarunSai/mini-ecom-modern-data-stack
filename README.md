@@ -83,26 +83,20 @@ Excel → (Python) → CSV
                                 │ Products   │
                                 └────────────┘
 ➡ dbt Models Built
-
 stg_customers.sql
-
 stg_orders.sql
-
 stg_products.sql
-
 stg_order_items.sql
-
 dim_customers.sql
-
 fct_orders.sql
-
 fct_revenue_daily.sql
-🧰 Setup Instructions
-1️⃣ Clone Repository
+
+## 🧰 Setup Instructions
+# 1️⃣ Clone Repository
 git clone https://github.com/<your_username>/mini-ecom-modern-data-stack.git
 cd mini-ecom-modern-data-stack
 
-2️⃣ Environment Setup
+# 2️⃣ Environment Setup
 
 Python ≥ 3.10
 
@@ -112,7 +106,7 @@ Install dbt:
 
 pip install dbt-snowflake
 
-3️⃣ Configure dbt Profile
+# 3️⃣ Configure dbt Profile
 
 Edit ~/.dbt/profiles.yml (Windows: %USERPROFILE%\.dbt\profiles.yml)
 
@@ -129,46 +123,37 @@ mini_ecom:
       schema: PUBLIC
   target: dev
 
-4️⃣ Run Models
+# 4️⃣ Run Models
 dbt debug
 dbt run
 dbt test
 
-5️⃣ Connect to Power BI
+# 5️⃣ Connect to Power BI
 
 Connect Power BI to ANALYTICS_DEV.PUBLIC_MART schema using the Snowflake connector.
 
-📊 Example Analytics
+## 📊 Example Analytics
 Metric	Description
 Total Revenue	Sum of completed order item sales
 Daily Revenue Trend	Time-series view from fct_revenue_daily
 Customer Segments	Dimensional breakdown from dim_customers
 Order Count by Status	Derived from normalized order statuses
-🧠 Key Learnings
 
+## 🧠 Key Learnings
 ELT pattern: Extract & Load first, then Transform in-warehouse.
-
 dbt modularity: ref() and source() manage model dependencies.
-
 Data governance: Separate layers (RAW → STG → MART) for clarity and auditability.
-
 Testing: Data quality enforced via dbt tests (unique, not_null).
-
 Reproducibility: The entire pipeline can be re-run from raw CSVs.
-
 Scalability: Architecture ready for Airflow orchestration.
 
-🔄 Next Steps
-
+## 🔄 Next Steps
  Add Apache Airflow DAG for full automation
-
  Deploy dbt to dbt Cloud / GitHub Actions CI/CD
-
  Add Snapshots for slowly changing dimensions
-
  Extend Power BI dashboards (Revenue, Customer Segments)
 
-📦 Repository Structure
+## 📦 Repository Structure
 mini-ecom-modern-data-stack/
 │
 ├── dbt/
@@ -188,12 +173,9 @@ mini-ecom-modern-data-stack/
 │
 └── README.md
 
-🧩 Future Enhancements
+## 🧩 Future Enhancements
 
 Add incremental models in dbt for large data volumes
-
 Implement data quality alerts in Airflow
-
 Add dbt documentation site using dbt docs generate
-
 Integrate with GitHub Actions CI/CD
