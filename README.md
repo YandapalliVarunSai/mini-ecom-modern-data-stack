@@ -82,100 +82,102 @@ Excel → (Python) → CSV
                                 ┌────────────┐
                                 │ Products   │
                                 └────────────┘
-➡ dbt Models Built
-stg_customers.sql
-stg_orders.sql
-stg_products.sql
-stg_order_items.sql
-dim_customers.sql
-fct_orders.sql
-fct_revenue_daily.sql
+## ➡ dbt Models Built
+
+- stg_customers.sql
+- stg_orders.sql
+- stg_products.sql
+- stg_order_items.sql
+- dim_customers.sql
+- fct_orders.sql
+- fct_revenue_daily.sql
+
+---
 
 ## 🧰 Setup Instructions
-# 1️⃣ Clone Repository
-git clone https://github.com/<your_username>/mini-ecom-modern-data-stack.git
-cd mini-ecom-modern-data-stack
 
-# 2️⃣ Environment Setup
+### 1️⃣ Clone Repository
+    git clone https://github.com/<your_username>/mini-ecom-modern-data-stack.git
+    cd mini-ecom-modern-data-stack
 
-- **Python ≥ 3.10**
+### 2️⃣ Environment Setup
+    # Requires Python ≥ 3.10
+    pip install dbt-snowflake
 
-**dbt Core (Snowflake adapter)**
+### 3️⃣ Configure dbt Profile
+Edit the file `~/.dbt/profiles.yml` (Windows: `%USERPROFILE%\.dbt\profiles.yml`)
 
-Install dbt:
+    mini_ecom:
+      outputs:
+        dev:
+          type: snowflake
+          account: <ACCOUNT_NAME>
+          user: <USERNAME>
+          password: <PASSWORD>
+          role: ANALYST
+          database: ANALYTICS_DEV
+          warehouse: WH_ANALYTICS_XS
+          schema: PUBLIC
+      target: dev
 
-pip install dbt-snowflake
+### 4️⃣ Run Models
+    dbt debug
+    dbt run
+    dbt test
 
-# 3️⃣ Configure dbt Profile
+### 5️⃣ Connect to Power BI
+Connect Power BI to `ANALYTICS_DEV.PUBLIC_MART` schema using the Snowflake connector.
 
-Edit ~/.dbt/profiles.yml (Windows: %USERPROFILE%\.dbt\profiles.yml)
-
-mini_ecom:
-  outputs:
-    dev:
-      type: snowflake
-      account: <ACCOUNT_NAME>
-      user: <USERNAME>
-      password: <PASSWORD>
-      role: ANALYST
-      database: ANALYTICS_DEV
-      warehouse: WH_ANALYTICS_XS
-      schema: PUBLIC
-  target: dev
-
-# 4️⃣ Run Models
-dbt debug
-dbt run
-dbt test
-
-# 5️⃣ Connect to Power BI
-
-Connect Power BI to ANALYTICS_DEV.PUBLIC_MART schema using the Snowflake connector.
+---
 
 ## 📊 Example Analytics
-Metric	Description
-Total Revenue	Sum of completed order item sales
-Daily Revenue Trend	Time-series view from fct_revenue_daily
-Customer Segments	Dimensional breakdown from dim_customers
-Order Count by Status	Derived from normalized order statuses
+
+| Metric | Description |
+|---------|-------------|
+| Total Revenue | Sum of completed order item sales |
+| Daily Revenue Trend | Time-series view from fct_revenue_daily |
+| Customer Segments | Dimensional breakdown from dim_customers |
+| Order Count by Status | Derived from normalized order statuses |
+
+---
 
 ## 🧠 Key Learnings
-ELT pattern: Extract & Load first, then Transform in-warehouse.
-dbt modularity: ref() and source() manage model dependencies.
-Data governance: Separate layers (RAW → STG → MART) for clarity and auditability.
-Testing: Data quality enforced via dbt tests (unique, not_null).
-Reproducibility: The entire pipeline can be re-run from raw CSVs.
-Scalability: Architecture ready for Airflow orchestration.
+
+- ELT pattern → Extract & Load first, then Transform in-warehouse.
+- dbt modularity → ref() and source() manage model dependencies.
+- Data governance → Separate layers (RAW → STG → MART) for clarity and auditability.
+- Testing → Data quality enforced via dbt tests (unique, not_null).
+- Reproducibility → The entire pipeline can be re-run from raw CSVs.
+- Scalability → Architecture ready for Airflow orchestration.
+
+---
 
 ## 🔄 Next Steps
- Add Apache Airflow DAG for full automation
- Deploy dbt to dbt Cloud / GitHub Actions CI/CD
- Add Snapshots for slowly changing dimensions
- Extend Power BI dashboards (Revenue, Customer Segments)
+
+- [ ] Add Apache Airflow DAG for full automation
+- [ ] Deploy dbt to dbt Cloud / GitHub Actions CI/CD
+- [ ] Add Snapshots for slowly changing dimensions
+- [ ] Extend Power BI dashboards (Revenue, Customer Segments)
+
+---
 
 ## 📦 Repository Structure
-mini-ecom-modern-data-stack/
-│
-├── dbt/
-│   └── mini_ecom/
-│       ├── models/
-│       │   ├── staging/
-│       │   ├── marts/
-│       │   └── snapshots/
-│       ├── macros/
-│       └── dbt_project.yml
-│
-├── python_scripts/
-│   ├── extract_excel_to_csv.py
-│
-├── airflow_dag/               # (coming soon)
-│   └── mini_ecom_dag.py
-│
-└── README.md
 
-## 🧩 Future Enhancements
-
-Add incremental models in dbt for large data volumes
-Implement data quality alerts in Airflow
-Add dbt documentation site using dbt docs generate
-Integrate with GitHub Actions CI/CD
+    mini-ecom-modern-data-stack/
+    │
+    ├── dbt/
+    │   └── mini_ecom/
+    │       ├── models/
+    │       │   ├── staging/
+    │       │   ├── marts/
+    │       │   └── snapshots/
+    │       ├── macros/
+    │       └── dbt_project.yml
+    │
+    ├── python_scripts/
+    │   ├── extract_excel_to_csv.py
+    │
+    ├── airflow_dag/               # (coming soon)
+    │   └── mini_ecom_dag.py
+    │
+    └── README.md
