@@ -98,9 +98,9 @@ cd mini-ecom-modern-data-stack
 
 # 2️⃣ Environment Setup
 
-Python ≥ 3.10
+- **Python ≥ 3.10**
 
-dbt Core (Snowflake adapter)
+**dbt Core (Snowflake adapter)**
 
 Install dbt:
 
